@@ -13,8 +13,8 @@ require ENV['TM_BUNDLE_SUPPORT'] + '/lib/rails_i18n.rb'
 class Hash
   def deep_merge(other)
     # deep_merge by Stefan Rusterholz, see http://www.ruby-forum.com/topic/142809
-    merger = proc { |key, v1, v2| Hash === v1 &amp;&amp; Hash === v2 ? v1.merge(v2, &amp;merger) : v2 }
-    merge(other, &amp;merger)
+    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : v2 }
+    merge(other, &merger)
   end
 
   def set(keys, value)
@@ -32,21 +32,11 @@ project_dir = ENV['TM_PROJECT_DIRECTORY']
 path = File.join(project_dir, 'log', 'translations')
 
 translation = ENV['TM_SELECTED_TEXT'].gsub(/^\s*("|')|("|')\s*$/, '')
-key = TextMate::UI.request_string :title =&gt; 'Key', :prompt =&gt; 'Key'
-keys = ['en'] + key.split('.')
 
 log_file = File.open(path, 'a+')
-log_file.puts "#{key}: #{translation}"
+log_file.puts '"' + translation + '": ' +'"'+translation+'"'
 
-data = { 'en' =&gt; {} }
-data.set keys, translation
-
-path = File.join(project_dir, 'log', 'translations.yml')
-data = data.deep_merge YAML.load(File.open(path, 'r') { |f| f.read }) if File.exists?(path)
-
-File.open(path, 'w+') { |f| f.write YAML.dump(data) }
-
-print "t(:'#{key}')"
+print 't("' + translation + '")'
 </string>
 	<key>fallbackInput</key>
 	<string>none</string>
