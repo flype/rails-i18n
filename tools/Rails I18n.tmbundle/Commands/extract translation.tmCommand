@@ -32,9 +32,30 @@ project_dir = ENV['TM_PROJECT_DIRECTORY']
 path = File.join(project_dir, 'log', 'translations')
 
 translation = ENV['TM_SELECTED_TEXT'].gsub(/^\s*("|')|("|')\s*$/, '')
+key = translation
+keys = ['en'] + key.split('.')
 
 log_file = File.open(path, 'a+')
-log_file.puts '"' + translation + '": ' +'"'+translation+'"'
+log_file.puts "#{key}: #{translation}"
+
+data = { 'en' => {} }
+data.set keys, translation
+
+path = File.join(project_dir, 'config', 'locales', 'en.yml')
+data = data.deep_merge YAML.load(File.open(path, 'r') { |f| f.read }) if File.exists?(path)
+
+File.open(path, 'w+') { |f| f.write YAML.dump(data) }
+
+keys = ['es'] + key.split('.')
+
+data = { 'es' => {} }
+data.set keys, translation
+
+path = File.join(project_dir, 'config', 'locales', 'es.yml')
+data = data.deep_merge YAML.load(File.open(path, 'r') { |f| f.read }) if File.exists?(path)
+
+File.open(path, 'w+') { |f| f.write YAML.dump(data) }
+
 
 print 't("' + translation + '")'
 </string>
