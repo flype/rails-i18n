@@ -5,8 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>
-#!/usr/bin/ruby 
+	<string>#!/usr/bin/ruby 
 
 require ENV['TM_SUPPORT_PATH'] + '/lib/ui.rb'
 require ENV['TM_BUNDLE_SUPPORT'] + '/lib/rails_i18n.rb'
@@ -14,8 +13,8 @@ require ENV['TM_BUNDLE_SUPPORT'] + '/lib/rails_i18n.rb'
 class Hash
   def deep_merge(other)
     # deep_merge by Stefan Rusterholz, see http://www.ruby-forum.com/topic/142809
-    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : v2 }
-    merge(other, &merger)
+    merger = proc { |key, v1, v2| Hash === v1 &amp;&amp; Hash === v2 ? v1.merge(v2, &amp;merger) : v2 }
+    merge(other, &amp;merger)
   end
 
   def set(keys, value)
@@ -39,7 +38,7 @@ keys = ['en'] + key.split('.')
 log_file = File.open(path, 'a+')
 log_file.puts "#{key}: #{translation}"
 
-data = { 'en' => {} }
+data = { &#x27;en&#x27; =&gt; {} }
 data.set keys, translation
 
 path = File.join(project_dir, 'config', 'locales', 'en.yml')
@@ -49,7 +48,7 @@ File.open(path, 'w+') { |f| f.write YAML.dump(data) }
 
 keys = ['es'] + key.split('.')
 
-data = { 'es' => {} }
+data = { &#x27;es&#x27; =&gt; {} }
 data.set keys, translation
 
 path = File.join(project_dir, 'config', 'locales', 'es.yml')
@@ -59,7 +58,6 @@ File.open(path, 'w+') { |f| f.write YAML.dump(data) }
 
 
 print 't("' + translation + '")'
-
 </string>
 	<key>fallbackInput</key>
 	<string>none</string>
