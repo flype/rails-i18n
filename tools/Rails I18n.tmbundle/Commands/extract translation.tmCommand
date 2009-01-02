@@ -5,7 +5,8 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/ruby 
+	<string>
+#!/usr/bin/ruby 
 
 require ENV['TM_SUPPORT_PATH'] + '/lib/ui.rb'
 require ENV['TM_BUNDLE_SUPPORT'] + '/lib/rails_i18n.rb'
@@ -58,6 +59,7 @@ File.open(path, 'w+') { |f| f.write YAML.dump(data) }
 
 
 print 't("' + translation + '")'
+
 </string>
 	<key>fallbackInput</key>
 	<string>none</string>
